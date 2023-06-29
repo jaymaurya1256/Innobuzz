@@ -9,8 +9,8 @@ import com.example.innobuzz.network.entity.Post
 interface Dao {
 
     @Insert
-    suspend fun insertData(posts: List<Post>)
+    suspend fun insertData(posts: List<Posts>)
 
-    @Query("Select * from post where id == :id")
-    suspend fun getDetails(id: Int): Table
+    @Query("Select * from Posts where id == :id")
+    suspend fun getDetails(id: Int): Posts
 }

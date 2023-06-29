@@ -41,8 +41,9 @@ class HomeFragment : Fragment() {
 
                 is ApiResult.Success -> {
                     val post = result.data
+                    viewModel.saveListToLocalDatabase(post)
                     lifecycleScope.launch {
-                        MyApplication.database.dao().insertData(post)
+                        MyApplication.database.dao().insertData(viewModel.posts)
                     }
                     binding.recyclerView.adapter = HomeAdapter(post) { id ->
                         val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(id)

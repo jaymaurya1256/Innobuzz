@@ -3,19 +3,15 @@ package com.example.innobuzz.ui
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.room.RoomDatabase
 import com.example.innobuzz.MyApplication
-import com.example.innobuzz.database.Table
-import com.example.innobuzz.network.RetrofitClient
+import com.example.innobuzz.database.Posts
 import com.example.innobuzz.network.entity.Post
-import com.example.innobuzz.utils.ApiResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class DetailViewModel : ViewModel() {
-    var postDetailLiveData = MutableLiveData<Table?>()
-
+    var postDetailLiveData = MutableLiveData<Posts?>()
 
     fun getDetails(id: Int) {
         viewModelScope.launch {
