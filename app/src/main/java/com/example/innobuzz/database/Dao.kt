@@ -13,4 +13,7 @@ interface Dao {
 
     @Query("Select * from Posts where id == :id")
     suspend fun getDetails(id: Int): Posts
+
+    @Query("Select Count(*) from Posts")
+    suspend fun getTotalCount(): Int
 }

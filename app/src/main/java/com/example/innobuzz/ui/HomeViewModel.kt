@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class HomeViewModel : ViewModel() {
-    var posts: List<Posts> = listOf()
+    var posts: MutableList<Posts> = mutableListOf()
     val postLiveData = MutableLiveData<ApiResult<List<Post>>>()
 
     fun getUsers() {
@@ -23,8 +23,8 @@ class HomeViewModel : ViewModel() {
             try {
                 val response = withContext(Dispatchers.IO) { RetrofitClient.apiService.getPosts() }
                 if (response.isSuccessful) {
-                    val users = response.body()
-                    postLiveData.value = ApiResult.Success(users!!)
+                    val posts = response.body()
+                    postLiveData.value = ApiResult.Success(posts!!)
                 } else {
                     val errorBody = response.errorBody()?.string()
                     postLiveData.value = ApiResult.Error(errorBody ?: "Unknown error")
@@ -35,13 +35,9 @@ class HomeViewModel : ViewModel() {
         }
     }
     fun saveListToLocalDatabase(post: List<Post>) {
-        val temp: Posts? = null
         for (i in post) {
-            temp?.id = i.id
-            temp?.userId = i.userId
-            temp?.title = i.title
-            temp?.body = i.body
-            posts.plus(temp)
+            val temp = Posts(i.title, i.body, i.id, i.userId)
+            posts.add(temp)
         }
     }
 }

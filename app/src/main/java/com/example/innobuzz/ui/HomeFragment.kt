@@ -34,7 +34,6 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 1)
-        viewModel.getUsers()
 
         viewModel.postLiveData.observe(viewLifecycleOwner) { result ->
             when (result) {
@@ -43,7 +42,9 @@ class HomeFragment : Fragment() {
                     val post = result.data
                     viewModel.saveListToLocalDatabase(post)
                     lifecycleScope.launch {
-                        MyApplication.database.dao().insertData(viewModel.posts)
+                        if (MyApplication.database.dao().getTotalCount() == 0){
+                            MyApplication.database.dao().insertData(viewModel.posts)
+                        }
                     }
                     binding.recyclerView.adapter = HomeAdapter(post) { id ->
                         val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(id)
@@ -60,6 +61,8 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+
+        viewModel.getUsers()
 
     }
 }
