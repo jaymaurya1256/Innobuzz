@@ -16,4 +16,7 @@ interface Dao {
 
     @Query("Select Count(*) from Posts")
     suspend fun getTotalCount(): Int
+
+    @Query("Select * from Posts")
+    suspend fun getAllPosts(): List<Posts>
 }

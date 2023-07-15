@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.innobuzz.MyApplication
 import com.example.innobuzz.R
+import com.example.innobuzz.database.Posts
 import com.example.innobuzz.databinding.FragmentHomeBinding
 import com.example.innobuzz.databinding.ListItemHomeBinding
 import com.example.innobuzz.utils.ApiResult
@@ -39,16 +40,15 @@ class HomeFragment : Fragment() {
             when (result) {
 
                 is ApiResult.Success -> {
-                    val post = result.data
-                    viewModel.saveListToLocalDatabase(post)
+                    viewModel.saveListToLocalDatabase(result.data)
                     lifecycleScope.launch {
                         if (MyApplication.database.dao().getTotalCount() == 0){
                             MyApplication.database.dao().insertData(viewModel.posts)
                         }
-                    }
-                    binding.recyclerView.adapter = HomeAdapter(post) { id ->
-                        val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(id)
-                        findNavController().navigate(action)
+                        binding.recyclerView.adapter = HomeAdapter(MyApplication.database.dao().getAllPosts()) { id ->
+                            val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(id)
+                            findNavController().navigate(action)
+                        }
                     }
                 }
 

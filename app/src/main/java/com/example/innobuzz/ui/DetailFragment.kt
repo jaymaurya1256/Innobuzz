@@ -32,8 +32,8 @@ class DetailFragment : Fragment() {
         viewModel.getDetails(args.id)
 
         viewModel.postDetailLiveData.observe(viewLifecycleOwner) {
-            binding.idDetail.text = it?.id.toString()
-            binding.userIdDetail.text = it?.userId.toString()
+            binding.idDetail.text = "Id: " + it?.id.toString()
+            binding.userIdDetail.text = "UserId: " + it?.userId.toString()
             binding.titleDetail.text = it?.title
             binding.bodyDetail.text = it?.body
         }

@@ -6,10 +6,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.innobuzz.R
+import com.example.innobuzz.database.Posts
 import com.example.innobuzz.databinding.ListItemHomeBinding
 import com.example.innobuzz.network.entity.Post
 
-class HomeAdapter(private val dataList: List<Post>, private val Onclick: (Int) -> Unit) : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
+class HomeAdapter(private val dataList: List<Posts>, private val Onclick: (Int) -> Unit) : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
 
     private lateinit var binding: ListItemHomeBinding
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -32,7 +33,7 @@ class HomeAdapter(private val dataList: List<Post>, private val Onclick: (Int) -
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val textView: TextView = itemView.findViewById(R.id.title_recycler_view_home)
 
-        fun bindData(data: Post) {
+        fun bindData(data: Posts) {
             textView.text = data.title
         }
     }
